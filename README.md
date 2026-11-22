@@ -79,6 +79,6 @@ This needs `prettier-plugin-tailwindcss` in the project, which the [Install](#in
    npm version patch
    ```
 
-   Use `patch` for a fix, `minor` for a new rule, or `major` for a change that flags existing code. The command runs the linter, bumps the version, publishes to npm and pushes the commit and tag to GitHub.
+   Use `patch` for a fix, `minor` for a new rule, or `major` for a change that flags existing code. The command runs the linter, bumps the version and pushes the commit and tag to GitHub. The tag starts a [GitHub Action](https://github.com/labnol/js-config/actions) that publishes the new version to npm within a few minutes.
 
 2. In each project, run `npm install -D @labnol/js-config@latest`.

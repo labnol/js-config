@@ -1,0 +1,23 @@
+name: Publish to npm
+
+on:
+  push:
+    tags: ['v*'] # `npm version` creates and pushes these tags
+
+permissions:
+  contents: read
+  id-token: write # Lets npm verify this workflow (trusted publishing), so no npm token is stored
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false # npm advises against caching in release builds
+      - run: npm ci
+      - run: npm run lint
+      - run: npm publish

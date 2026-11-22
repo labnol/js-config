@@ -85,7 +85,7 @@
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint .",
-    "postversion": "npm publish && git push --follow-tags",
+    "postversion": "git push --follow-tags",
     "preversion": "npm run lint"
   },
   "type": "module",
