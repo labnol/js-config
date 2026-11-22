@@ -3,13 +3,18 @@ export const RULES = {
   'no-console': 'warn',
   'no-duplicate-imports': 'error',
   'no-unused-expressions': 'warn',
+  // A leading underscore marks a name as intentionally unused. Using that name is an error.
   'no-unused-vars': [
-    'warn',
+    'error',
     {
-      argsIgnorePattern: 'res|next|^err|^ignore|^_',
-      caughtErrors: 'none',
+      args: 'all',
+      argsIgnorePattern: '^_',
+      caughtErrorsIgnorePattern: '^_',
       destructuredArrayIgnorePattern: '^_',
+      ignoreClassWithStaticInitBlock: true,
       ignoreRestSiblings: true,
+      ignoreUsingDeclarations: true,
+      reportUsedIgnorePattern: true,
       varsIgnorePattern: '^_',
     },
   ],

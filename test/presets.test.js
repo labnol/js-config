@@ -48,6 +48,58 @@ describe('shared rules', () => {
     assert.ok(errorRules(result).includes('no-var'));
   });
 
+  it('reports unused variables, arguments, and catch bindings', async () => {
+    const code = `const unused = 1;
+
+export function run(skipped, used) {
+  try {
+    return used;
+  } catch (error) {
+    return used;
+  }
+}
+`;
+    const result = await lint(nodeConfig, code, 'src/example.js');
+
+    assert.equal(result.messages.filter((message) => message.ruleId === 'no-unused-vars').length, 3);
+  });
+
+  it('ignores unused names that start with an underscore', async () => {
+    const code = `const [_skipped, kept] = [1, 2];
+const _unused = 1;
+const { omitted, ...rest } = { omitted: 1, kept };
+
+class Boot {
+  static {
+    globalThis.booted = true;
+  }
+}
+
+export function run(_unusedArg) {
+  using lock = { [Symbol.dispose]() {} };
+
+  try {
+    return kept + rest.kept;
+  } catch (_error) {
+    return kept;
+  }
+}
+`;
+    const result = await lint(nodeConfig, code, 'src/example.js');
+
+    assert.deepEqual(errorRules(result), []);
+  });
+
+  it('reports a name marked unused when it is used', async () => {
+    const code = `const _value = 1;
+
+export const value = _value;
+`;
+    const result = await lint(nodeConfig, code, 'src/example.js');
+
+    assert.ok(errorRules(result).includes('no-unused-vars'));
+  });
+
   it('sorts keys in JSON files', async () => {
     const result = await lint(nodeConfig, '{ "b": 1, "a": 2 }\n', 'data.json');
 
