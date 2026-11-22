@@ -1,0 +1,93 @@
+{
+  "author": {
+    "name": "Amit Agarwal",
+    "url": "https://twitter.com/labnol"
+  },
+  "dependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.15.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-googleappsscript": "^1.0.5",
+    "eslint-plugin-import-x": "^4.18.1",
+    "eslint-plugin-jsonc": "^3.4.2",
+    "eslint-plugin-simple-import-sort": "^14.0.0",
+    "globals": "^17.14.0",
+    "prettier": "^3.10.1"
+  },
+  "description": "Shareable ESLint flat config and Prettier config for Google Apps Script, Node.js and React projects, ready for ESLint 10, Vite and Tailwind CSS",
+  "devDependencies": {
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.8",
+    "prettier-plugin-tailwindcss": "^0.8.1"
+  },
+  "exports": {
+    "./eslint/appsscript": "./eslint/appsscript.js",
+    "./eslint/node": "./eslint/node.js",
+    "./eslint/react": "./eslint/react.js",
+    "./prettier": "./prettier/base.json",
+    "./prettier/tailwind": "./prettier/tailwind.json"
+  },
+  "files": [
+    "eslint",
+    "prettier"
+  ],
+  "homepage": "https://digitalinspiration.com",
+  "keywords": [
+    "eslint",
+    "eslintconfig",
+    "eslint-config",
+    "eslint-flat-config",
+    "flat-config",
+    "prettier",
+    "prettier-config",
+    "google-apps-script",
+    "apps-script",
+    "gas",
+    "google-workspace",
+    "react",
+    "react-hooks",
+    "vite",
+    "tailwindcss",
+    "nodejs",
+    "javascript"
+  ],
+  "license": "MIT",
+  "name": "@labnol/js-config",
+  "peerDependencies": {
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.8",
+    "prettier-plugin-tailwindcss": ">=0.6.0"
+  },
+  "peerDependenciesMeta": {
+    "eslint-plugin-react": {
+      "optional": true
+    },
+    "eslint-plugin-react-hooks": {
+      "optional": true
+    },
+    "eslint-plugin-react-refresh": {
+      "optional": true
+    },
+    "prettier-plugin-tailwindcss": {
+      "optional": true
+    }
+  },
+  "prettier": "./prettier/base.json",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/labnol/js-config.git"
+  },
+  "scripts": {
+    "format": "prettier --write .",
+    "lint": "eslint .",
+    "postversion": "npm publish && git push --follow-tags",
+    "preversion": "npm run lint"
+  },
+  "type": "module",
+  "version": "1.0.0"
+}
