@@ -1,5 +1,5 @@
 {
-  "endOfLine": "auto",
+  "endOfLine": "lf",
   "jsxSingleQuote": true,
   "printWidth": 120,
   "semi": true,

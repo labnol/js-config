@@ -5,28 +5,31 @@
   },
   "dependencies": {
     "@eslint/js": "^10.0.1",
-    "eslint": "^10.15.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-googleappsscript": "^1.0.5",
     "eslint-plugin-import-x": "^4.18.1",
     "eslint-plugin-jsonc": "^3.4.2",
     "eslint-plugin-simple-import-sort": "^14.0.0",
-    "globals": "^17.14.0",
-    "prettier": "^3.10.1"
+    "globals": "^17.14.0"
   },
   "description": "Shareable ESLint flat config and Prettier config for Google Apps Script, Node.js and React projects, ready for ESLint 10, Vite and Tailwind CSS",
   "devDependencies": {
+    "eslint": "^10.15.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.8",
+    "prettier": "^3.10.1",
     "prettier-plugin-tailwindcss": "^0.8.1"
+  },
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24"
   },
   "exports": {
     "./eslint/appsscript": "./eslint/appsscript.js",
     "./eslint/node": "./eslint/node.js",
     "./eslint/react": "./eslint/react.js",
     "./prettier": "./prettier/base.json",
-    "./prettier/tailwind": "./prettier/tailwind.json"
+    "./prettier/tailwind": "./prettier/tailwind.js"
   },
   "files": [
     "eslint",
@@ -55,9 +58,11 @@
   "license": "MIT",
   "name": "@labnol/js-config",
   "peerDependencies": {
+    "eslint": "^10.15.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.8",
+    "prettier": "^3.10.1",
     "prettier-plugin-tailwindcss": ">=0.6.0"
   },
   "peerDependenciesMeta": {
@@ -86,7 +91,8 @@
     "format": "prettier --write .",
     "lint": "eslint .",
     "postversion": "git push --follow-tags",
-    "preversion": "npm run lint"
+    "preversion": "npm test && npm run lint",
+    "test": "node --test"
   },
   "type": "module",
   "version": "1.0.1"

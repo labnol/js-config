@@ -24,7 +24,13 @@ export const base = [
   ...jsoncConfigs['flat/recommended-with-jsonc'],
   {
     files: ['**/*.json', '**/*.jsonc'],
-    rules: { 'jsonc/no-comments': 'off', 'jsonc/sort-keys': 'error' },
+    rules: { 'jsonc/no-comments': 'off' },
+  },
+  // Key order in these files is a convention, so leave it alone
+  {
+    files: ['**/*.json', '**/*.jsonc'],
+    ignores: ['**/package.json', '**/appsscript.json', '**/tsconfig*.json', '**/.clasp.json'],
+    rules: { 'jsonc/sort-keys': 'error' },
   },
 
   // Build and tool configs run in Node and may import devDependencies

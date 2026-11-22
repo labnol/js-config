@@ -18,7 +18,7 @@ export default [
   {
     files: JS_FILES,
     plugins: { 'react-refresh': reactRefresh.plugin },
-    languageOptions: { globals: { ...globals.browser, google: true, process: 'readonly' } },
+    languageOptions: { globals: { ...globals.browser, google: 'readonly', process: 'readonly' } },
     rules: REACT_RULES,
   },
   // Must be last: turns off stylistic rules that conflict with Prettier

@@ -13,9 +13,9 @@ export default [
         ...globals.node,
         ...googleappsscript.environments.googleappsscript.globals,
         __APP_VERSION__: 'readonly',
-        google: true,
-        OAuth1: true,
-        OAuth2: true,
+        google: 'readonly',
+        OAuth1: 'readonly',
+        OAuth2: 'readonly',
       },
     },
     rules: {
@@ -24,7 +24,6 @@ export default [
       'import-x/no-unresolved': 'off',
     },
   },
-  { files: ['**/*.html'], languageOptions: { globals: globals.browser } },
   // Must be last: turns off stylistic rules that conflict with Prettier
   prettier,
 ];

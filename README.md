@@ -11,29 +11,30 @@ Built by [Amit Agarwal](https://www.labnol.org/about) for [Digital Inspiration](
 | `eslint/appsscript` | Google Apps Script projects    | Apps Script globals such as `SpreadsheetApp`, plus `google.script.run` and OAuth libraries |
 | `eslint/node`       | Node.js projects               | Node globals and a warning for import cycles                                               |
 | `eslint/react`      | React apps built with Vite     | React, Hooks, React Compiler and Fast Refresh rules                                        |
-| `prettier`          | Any project                    | 120-character lines, single quotes and semicolons                                          |
+| `prettier`          | Any project                    | 120-character lines, single quotes, semicolons and LF line endings                         |
 | `prettier/tailwind` | Projects that use Tailwind CSS | The same style, plus sorted Tailwind classes                                               |
 
-Every ESLint preset is an ESLint 10 flat config. It also sorts imports, lints JSON files and leaves formatting to Prettier.
+Every ESLint preset is an ESLint 10 flat config. It sorts imports, lints JSON files, sorts keys in JSON other than `package.json`, `appsscript.json`, `tsconfig*.json` and `.clasp.json`, and leaves formatting to Prettier.
 
 ## Install
 
 ```bash
-npm install -D @labnol/js-config
+npm install -D eslint prettier @labnol/js-config
 ```
 
-This also installs `eslint` and `prettier`, so remove them and any ESLint plugins from the project's own `devDependencies`.
+ESLint and Prettier are peer dependencies, so the project installs them directly. The `eslint` and `prettier` commands then resolve under npm, pnpm, and Yarn. This package depends on the other ESLint plugins the presets import.
+
+Requires Node `^20.19.0`, `^22.13.0`, or `>=24`, the same range as ESLint 10.
 
 ### React Projects
 
-A React project also needs the React plugins. Leave out `prettier-plugin-tailwindcss` if the project doesn't use Tailwind:
+A React project also needs the React plugins. Add `prettier-plugin-tailwindcss` when the project uses Tailwind:
 
 ```bash
-echo legacy-peer-deps=true >> .npmrc
-npm install -D eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-react-refresh prettier-plugin-tailwindcss
+npm install -D eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-react-refresh prettier-plugin-tailwindcss --legacy-peer-deps
 ```
 
-The first line keeps the project on ESLint 10. Without it, npm installs ESLint 9 instead, because `eslint-plugin-react` 7.x doesn't list ESLint 10 as supported yet.
+`eslint-plugin-react` 7.x does not list ESLint 10 as a peer dependency yet, so this install uses `--legacy-peer-deps`. To keep later `npm install` runs from stopping on that same mismatch, add `legacy-peer-deps=true` to the project's `.npmrc`. That setting skips peer checks for every dependency in the project. Remove the line once `eslint-plugin-react` declares ESLint 10.
 
 ## Set up ESLint
 
@@ -53,6 +54,16 @@ To change a rule in one project, import the preset and add your overrides after 
 import appsScript from '@labnol/js-config/eslint/appsscript';
 
 export default [...appsScript, { rules: { 'no-console': 'off' } }];
+```
+
+### React version
+
+The React preset targets React 19. `eslint-plugin-react` 7.x crashes on ESLint 10 when the version is set to `detect` (`context.getFilename` was removed). For a React 18 app, set the version after the preset:
+
+```js
+import react from '@labnol/js-config/eslint/react';
+
+export default [...react, { settings: { react: { version: '18' } } }];
 ```
 
 ## Set up Prettier
@@ -79,6 +90,10 @@ This needs `prettier-plugin-tailwindcss` in the project, which the [Install](#in
    npm version patch
    ```
 
-   Use `patch` for a fix, `minor` for a new rule, or `major` for a change that flags existing code. The command runs the linter, bumps the version and pushes the commit and tag to GitHub. The tag starts a [GitHub Action](https://github.com/labnol/js-config/actions) that publishes the new version to npm within a few minutes.
+   Use `patch` for a fix, `minor` for a new rule, or `major` for a change that flags existing code. The command runs the tests and the linter, bumps the version and pushes the commit and tag to GitHub. The tag starts a [GitHub Action](https://github.com/labnol/js-config/actions) that publishes the new version to npm within a few minutes.
 
-2. In each project, run `npm install -D @labnol/js-config@latest`.
+2. In each project, install the new version. Include `eslint` and `prettier` when the project does not list them yet:
+
+   ```bash
+   npm install -D eslint prettier @labnol/js-config@latest
+   ```

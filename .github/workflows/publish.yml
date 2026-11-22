@@ -19,5 +19,6 @@ jobs:
           registry-url: https://registry.npmjs.org
           package-manager-cache: false # npm advises against caching in release builds
       - run: npm ci
+      - run: npm test
       - run: npm run lint
       - run: npm publish

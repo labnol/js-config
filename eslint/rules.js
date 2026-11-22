@@ -1,10 +1,7 @@
 // Shared rules for every preset (Apps Script, Node, React).
 export const RULES = {
-  camelcase: 'off',
   'no-console': 'warn',
-  'no-continue': 'off',
   'no-duplicate-imports': 'error',
-  'no-underscore-dangle': 'off',
   'no-unused-expressions': 'warn',
   'no-unused-vars': [
     'warn',
@@ -16,13 +13,14 @@ export const RULES = {
       varsIgnorePattern: '^_',
     },
   ],
-  'no-use-before-define': 'error',
+  // Function declarations are hoisted, so calling one earlier in the file is valid
+  'no-use-before-define': ['error', { functions: false }],
   'no-useless-rename': 'error',
   'no-var': 'error',
   'object-shorthand': 'error',
   'prefer-arrow-callback': 'error',
   'prefer-const': 'error',
-  'prefer-destructuring': ['error', { array: true, object: true }, { enforceForRenamedProperties: false }],
+  'prefer-destructuring': ['error', { array: false, object: true }, { enforceForRenamedProperties: false }],
   'prefer-template': 'error',
 
   'import-x/extensions': ['error', 'ignorePackages'],

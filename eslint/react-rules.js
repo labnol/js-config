@@ -2,8 +2,6 @@
 export const REACT_RULES = {
   // Vite resolves extensionless imports and folder index files
   'import-x/extensions': 'off',
-  // `import toast from 'react-hot-toast'` is the library's documented usage
-  'import-x/no-named-as-default': 'off',
   // Vite path aliases (@components/...) aren't resolvable without extra resolver setup
   'import-x/no-unresolved': 'off',
   'no-restricted-imports': ['error', { patterns: [{ group: ['../../*'], message: 'Use a path alias instead.' }] }],
