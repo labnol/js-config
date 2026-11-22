@@ -19,10 +19,10 @@ Every ESLint preset is an ESLint 10 flat config. It sorts imports, lints JSON fi
 ## Install
 
 ```bash
-npm install -D eslint prettier @labnol/js-config
+npm install -D @labnol/js-config
 ```
 
-ESLint and Prettier are peer dependencies, so the project installs them directly. The `eslint` and `prettier` commands then resolve under npm, pnpm, and Yarn. This package depends on the other ESLint plugins the presets import.
+This also installs ESLint, Prettier and the ESLint plugins the presets import, so remove them from the project's own `devDependencies`. npm links the `eslint` and `prettier` commands into the project, so `npm run lint` works without listing them. pnpm and Yarn don't, so with those, add `eslint` and `prettier` to the project too.
 
 Requires Node `^20.19.0`, `^22.13.0`, or `>=24`, the same range as ESLint 10.
 
@@ -92,8 +92,8 @@ This needs `prettier-plugin-tailwindcss` in the project, which the [Install](#in
 
    Use `patch` for a fix, `minor` for a new rule, or `major` for a change that flags existing code. The command runs the tests and the linter, bumps the version and pushes the commit and tag to GitHub. The tag starts a [GitHub Action](https://github.com/labnol/js-config/actions) that publishes the new version to npm within a few minutes.
 
-2. In each project, install the new version. Include `eslint` and `prettier` when the project does not list them yet:
+2. In each project, install the new version:
 
    ```bash
-   npm install -D eslint prettier @labnol/js-config@latest
+   npm install -D @labnol/js-config@latest
    ```
