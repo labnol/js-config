@@ -28,13 +28,21 @@ Requires Node `^20.19.0`, `^22.13.0`, or `>=24`, the same range as ESLint 10.
 
 ### React Projects
 
-A React project also needs the React plugins. Add `prettier-plugin-tailwindcss` when the project uses Tailwind:
+A React project also needs the React plugins. `eslint-plugin-react` 7.x does not list ESLint 10 as a peer dependency yet, so first tell npm to accept ESLint 10 for that one plugin. Add this to the project's `package.json`:
 
-```bash
-npm install -D eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-react-refresh prettier-plugin-tailwindcss --legacy-peer-deps
+```json
+"overrides": {
+  "eslint-plugin-react": { "eslint": "^10" }
+}
 ```
 
-`eslint-plugin-react` 7.x does not list ESLint 10 as a peer dependency yet, so this install uses `--legacy-peer-deps`. To keep later `npm install` runs from stopping on that same mismatch, add `legacy-peer-deps=true` to the project's `.npmrc`. That setting skips peer checks for every dependency in the project. Remove the line once `eslint-plugin-react` declares ESLint 10.
+Then install the plugins. Add `prettier-plugin-tailwindcss` when the project uses Tailwind:
+
+```bash
+npm install -D eslint-plugin-react eslint-plugin-react-hooks eslint-plugin-react-refresh prettier-plugin-tailwindcss
+```
+
+The override applies only to `eslint-plugin-react`, so npm still checks peer dependencies for everything else. If the project's `.npmrc` has `legacy-peer-deps=true` from an earlier setup, remove that line. Remove the override once `eslint-plugin-react` declares ESLint 10.
 
 ## Set up ESLint
 

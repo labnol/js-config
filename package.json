@@ -57,6 +57,11 @@
   ],
   "license": "MIT",
   "name": "@labnol/js-config",
+  "overrides": {
+    "eslint-plugin-react": {
+      "eslint": "^10"
+    }
+  },
   "peerDependencies": {
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
