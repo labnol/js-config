@@ -14,7 +14,7 @@ Built by [Amit Agarwal](https://www.labnol.org/about) for [Digital Inspiration](
 | `prettier`          | Any project                    | 120-character lines, single quotes, semicolons and LF line endings                         |
 | `prettier/tailwind` | Projects that use Tailwind CSS | The same style, plus sorted Tailwind classes                                               |
 
-Every ESLint preset is an ESLint 10 flat config. It sorts imports, lints JSON files, sorts keys in JSON other than `package.json`, `appsscript.json`, `tsconfig*.json` and `.clasp.json`, and leaves formatting to Prettier.
+Every ESLint preset is an ESLint 10 flat config. It sorts imports, lints JSON files, sorts keys in JSON other than `package.json`, `appsscript.json`, `tsconfig*.json`, `jsconfig*.json`, `.clasp.json` and `.vscode/*.json`, and leaves formatting to Prettier.
 
 ## Install
 

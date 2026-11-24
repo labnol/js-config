@@ -1,7 +1,6 @@
 // Shared rules for every preset (Apps Script, Node, React).
 export const RULES = {
   'no-console': 'warn',
-  'no-duplicate-imports': 'error',
   'no-unused-expressions': 'warn',
   // A leading underscore marks a name as intentionally unused. Using that name is an error.
   'no-unused-vars': [
@@ -31,6 +30,7 @@ export const RULES = {
   'import-x/extensions': ['error', 'ignorePackages'],
   'import-x/first': 'error',
   'import-x/newline-after-import': 'error',
+  'import-x/no-duplicates': 'error',
   'import-x/no-extraneous-dependencies': 'warn',
   'import-x/no-self-import': 'error',
   'import-x/no-useless-path-segments': 'error',

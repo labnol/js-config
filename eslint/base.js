@@ -10,7 +10,7 @@ export const JS_FILES = ['**/*.{js,jsx,mjs,cjs}'];
 
 // Common setup each preset builds on. Presets add their own globals and end with prettier.
 export const base = [
-  { ignores: ['dist/**', 'build/**', 'node_modules/**', 'package-lock.json'] },
+  { ignores: ['**/dist/**', '**/build/**', '**/package-lock.json'] },
   js.configs.recommended,
   importX.flatConfigs.recommended,
   {
@@ -29,7 +29,14 @@ export const base = [
   // Key order in these files is a convention, so leave it alone
   {
     files: ['**/*.json', '**/*.jsonc'],
-    ignores: ['**/package.json', '**/appsscript.json', '**/tsconfig*.json', '**/.clasp.json'],
+    ignores: [
+      '**/package.json',
+      '**/appsscript.json',
+      '**/tsconfig*.json',
+      '**/jsconfig*.json',
+      '**/.clasp.json',
+      '**/.vscode/*.json',
+    ],
     rules: { 'jsonc/sort-keys': 'error' },
   },
 

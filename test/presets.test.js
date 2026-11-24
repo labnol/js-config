@@ -100,6 +100,32 @@ export const value = _value;
     assert.ok(errorRules(result).includes('no-unused-vars'));
   });
 
+  it('reports a duplicate import once per line', async () => {
+    const code = `import { readFile } from 'node:fs/promises';
+import { writeFile } from 'node:fs/promises';
+
+export { readFile, writeFile };
+`;
+    const result = await lint(nodeConfig, code, 'src/example.js');
+
+    assert.deepEqual(errorRules(result), ['import-x/no-duplicates', 'import-x/no-duplicates']);
+  });
+
+  it('ignores build output in nested folders', async () => {
+    const eslint = new ESLint({ overrideConfig: nodeConfig, overrideConfigFile: true });
+
+    assert.equal(await eslint.isPathIgnored('packages/app/dist/bundle.js'), true);
+    assert.equal(await eslint.isPathIgnored('functions/package-lock.json'), true);
+  });
+
+  it('leaves jsconfig.json and VS Code settings key order alone', async () => {
+    const jsconfig = await lint(nodeConfig, '{ "include": ["src"], "compilerOptions": {} }\n', 'jsconfig.json');
+    const settings = await lint(nodeConfig, '{ "b": 1, "a": 2 }\n', '.vscode/settings.json');
+
+    assert.equal(errorRules(jsconfig).includes('jsonc/sort-keys'), false);
+    assert.equal(errorRules(settings).includes('jsonc/sort-keys'), false);
+  });
+
   it('sorts keys in JSON files', async () => {
     const result = await lint(nodeConfig, '{ "b": 1, "a": 2 }\n', 'data.json');
 
