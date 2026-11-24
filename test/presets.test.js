@@ -100,6 +100,43 @@ export const value = _value;
     assert.ok(errorRules(result).includes('no-unused-vars'));
   });
 
+  it('reports loose equality, nested ternaries, else after return and parameter reassignment', async () => {
+    const code = `export const pick = (a, b) => {
+  if (a == b) {
+    return 1;
+  } else {
+    return a ? 1 : b ? 2 : 3;
+  }
+};
+
+export const reset = (value) => {
+  value = 0;
+
+  return value;
+};
+`;
+    const result = await lint(nodeConfig, code, 'src/example.js');
+
+    assert.deepEqual(errorRules(result).toSorted(), [
+      'eqeqeq',
+      'no-else-return',
+      'no-nested-ternary',
+      'no-param-reassign',
+    ]);
+  });
+
+  it('warns on a default export, except in tool configs', async () => {
+    const code = 'const value = 1;\n\nexport default value;\n';
+    const source = await lint(nodeConfig, code, 'src/example.js');
+    const config = await lint(nodeConfig, code, 'vite.config.js');
+
+    assert.deepEqual(
+      source.messages.map((message) => [message.ruleId, message.severity]),
+      [['import-x/no-default-export', 1]]
+    );
+    assert.deepEqual(config.messages, []);
+  });
+
   it('reports a duplicate import once per line', async () => {
     const code = `import { readFile } from 'node:fs/promises';
 import { writeFile } from 'node:fs/promises';
@@ -167,6 +204,19 @@ export { service };
     const result = await lint(appsScript, code, 'Code.js');
 
     assert.deepEqual(errorRules(result), []);
+  });
+
+  it('reports Node globals that Apps Script lacks', async () => {
+    const code = 'export const run = () => setTimeout(() => process.exit(Buffer.from([1]).length), 1);\n';
+    const result = await lint(appsScript, code, 'Code.js');
+
+    assert.equal(result.messages.filter((message) => message.ruleId === 'no-undef').length, 3);
+  });
+
+  it('keeps Node globals in tool configs', async () => {
+    const result = await lint(appsScript, 'export default { mode: process.env.NODE_ENV };\n', 'vite.config.js');
+
+    assert.deepEqual(result.messages, []);
   });
 
   it('reports assignment to readonly globals', async () => {

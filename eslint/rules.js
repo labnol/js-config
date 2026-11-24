@@ -1,6 +1,10 @@
 // Shared rules for every preset (Apps Script, Node, React).
 export const RULES = {
+  eqeqeq: 'error',
   'no-console': 'warn',
+  'no-else-return': 'error',
+  'no-nested-ternary': 'error',
+  'no-param-reassign': 'error',
   'no-unused-expressions': 'warn',
   // A leading underscore marks a name as intentionally unused. Using that name is an error.
   'no-unused-vars': [
@@ -30,6 +34,8 @@ export const RULES = {
   'import-x/extensions': ['error', 'ignorePackages'],
   'import-x/first': 'error',
   'import-x/newline-after-import': 'error',
+  // A warning, so a project with default exports can adopt the preset and convert over time
+  'import-x/no-default-export': 'warn',
   'import-x/no-duplicates': 'error',
   'import-x/no-extraneous-dependencies': 'warn',
   'import-x/no-self-import': 'error',

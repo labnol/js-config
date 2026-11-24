@@ -1,6 +1,5 @@
 import prettier from 'eslint-config-prettier/flat';
 import googleappsscript from 'eslint-plugin-googleappsscript';
-import globals from 'globals';
 
 import { base, JS_FILES } from './base.js';
 
@@ -9,8 +8,8 @@ export default [
   {
     files: JS_FILES,
     languageOptions: {
+      // No Node globals: Apps Script has no process, Buffer, fetch or setTimeout
       globals: {
-        ...globals.node,
         ...googleappsscript.environments.googleappsscript.globals,
         __APP_VERSION__: 'readonly',
         google: 'readonly',

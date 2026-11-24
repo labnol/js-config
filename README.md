@@ -14,7 +14,7 @@ Built by [Amit Agarwal](https://www.labnol.org/about) for [Digital Inspiration](
 | `prettier`          | Any project                    | 120-character lines, single quotes, semicolons and LF line endings                         |
 | `prettier/tailwind` | Projects that use Tailwind CSS | The same style, plus sorted Tailwind classes                                               |
 
-Every ESLint preset is an ESLint 10 flat config. It sorts imports, lints JSON files, sorts keys in JSON other than `package.json`, `appsscript.json`, `tsconfig*.json`, `jsconfig*.json`, `.clasp.json` and `.vscode/*.json`, and leaves formatting to Prettier.
+Every ESLint preset is an ESLint 10 flat config. It requires `===`, blocks nested ternaries, `else` after `return` and reassigned parameters, and warns on default exports outside tool configs such as `vite.config.js`. It sorts imports, lints JSON files, sorts keys in JSON other than `package.json`, `appsscript.json`, `tsconfig*.json`, `jsconfig*.json`, `.clasp.json` and `.vscode/*.json`, and leaves formatting to Prettier.
 
 ## Install
 
@@ -54,6 +54,20 @@ To change a rule in one project, import the preset and add your overrides after 
 import appsScript from '@labnol/js-config/eslint/appsscript';
 
 export default [...appsScript, { rules: { 'no-console': 'off' } }];
+```
+
+### Node Code in an Apps Script Project
+
+The Apps Script preset has no Node globals, because Apps Script has no `process`, `Buffer`, `fetch` or `setTimeout`. Tool configs such as `vite.config.js` still get them. For other code that runs in Node, such as tests, scripts or Cloud Functions, add the globals for those folders:
+
+```js
+import appsScript from '@labnol/js-config/eslint/appsscript';
+import globals from 'globals';
+
+export default [
+  ...appsScript,
+  { files: ['scripts/**/*.js', '**/*.test.js'], languageOptions: { globals: globals.node } },
+];
 ```
 
 ### React version

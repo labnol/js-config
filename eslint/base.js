@@ -40,10 +40,13 @@ export const base = [
     rules: { 'jsonc/sort-keys': 'error' },
   },
 
-  // Build and tool configs run in Node and may import devDependencies
+  // Build and tool configs run in Node, may import devDependencies and must default-export
   {
     files: ['*.config.js', '*.config.mjs'],
     languageOptions: { globals: globals.node },
-    rules: { 'import-x/no-extraneous-dependencies': ['error', { devDependencies: true }] },
+    rules: {
+      'import-x/no-default-export': 'off',
+      'import-x/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    },
   },
 ];
